@@ -1,0 +1,5 @@
+﻿  MatrixMulMP.c
+b:\matrixmulmp\matrixmulmp\matrixmulmp.c(27): warning C4013: 'malloc' undefined; assuming extern returning int
+b:\matrixmulmp\matrixmulmp\matrixmulmp.c(32): warning C4477: 'fscanf_s' : format string '%d' requires an argument of type 'int *', but variadic argument 1 has type 'double'
+b:\matrixmulmp\matrixmulmp\matrixmulmp.c(55): warning C4477: 'fscanf_s' : format string '%d' requires an argument of type 'int *', but variadic argument 1 has type 'double'
+  MatrixMulMP.vcxproj -> B:\MatrixMulMP\Debug\MatrixMulMP.exe

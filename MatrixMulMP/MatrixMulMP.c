@@ -21,7 +21,7 @@ int rA, cA, rB, cB, rC, cC = 0;
 void printMatrix(float* matrix, int nrow, int ncol) {
 	for (int i = 0; i < nrow; i++) {
 		for (int j = 0; j < ncol; j++)
-			printf("% 4.10f ", *(matrix + i * ncol + j));
+			printf("% 4.2f ", *(matrix + i * ncol + j));
 		printf("\n");
 	}
 }
@@ -54,8 +54,8 @@ void fillMatrixUI(char* fName, float* matrix, int rows, int cols){
 /********************/
 int main(void){
 	int validMatrix = 0;
-	//do
-	//{
+	do
+	{
 		/*-----------------------------Llenado de matriz A-----------------------------*/
 		printf("Introduzca las dimensiones de la matriz A (filas columnas): ");
 		scanf_s("%d %d", &rA, &cA);
@@ -69,16 +69,16 @@ int main(void){
 		strcpy_s(fName, 100, "D:\\Users\\Alessandro Balcazar\\Documents\\Proyecto_Multi\\MatrixMulMP\\Debug\\matrixB2500.txt");
 		err = fopen_s(&pFile, fName, "r");
 		matrixB = (float*)malloc(sizeof(float) * rB * cB);
-		fillMatrixUI(fName, matrixA, rB, cB);
+		fillMatrixUI(fName, matrixB, rB, cB);
 
 		/*-----------Validacion para poder multuplicar las matrices-----------*/
 		if (cA != rB) {
-			printf("Las matrices no se pueden multiplicar. Verifique que las filas y columnas.");
+			printf("\nLas matrices no se pueden multiplicar. Verifique que las filas y columnas.\n");
 		}
 		else {
 			validMatrix = 1;
 		}
-	//} while (validMatrix == 0);
+	} while (validMatrix == 0);
 
 	return 0; 
 }

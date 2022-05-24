@@ -1,79 +1,115 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
 
-FILE *pFile;		//File handler for matrix files
+#define FILE_A	"\\matrixA1048576.txt"
+#define FILE_B	"\\matrixB1048576.txt"
+#define FILE_C	"\\matrixC.txt"
+
+char cwd[100];			// Exec path
+
+FILE *pFile;			// File handler for matrix files
 
 double* matrixA = NULL;	//Pointer to matrix A
 double* matrixB = NULL;	//Pointer to matrix B
 double* matrixC = NULL;	//Pointer to matrix C
 
-//Variables to save exec time
-time_t start, end;
+// Variables to save exec time
+time_t start, end, seqTimeArr[5], exTime2[5], exTime3[5];
 
-errno_t err;		//File error catcher
+errno_t err;			//File error catcher
 
-char fName[100];	//Name of the file
+char fName[100];		//Name of the file
 int rA, cA, rB, cB, rC, cC = 0;
 
-//Print matrix
+// Print matrix
 void printMatrix(double* matrix, int nrow, int ncol) {
 	for (int i = 0; i < nrow; i++) {
 		for (int j = 0; j < ncol; j++)
-			printf("% 4.2f ", *(matrix + i * ncol + j));
+			printf("% 8.2f ", *(matrix + i * ncol + j));
 		printf("\n");
 	}
 }
 
-// Fill matrix from console
-void fillMatrixUI(char* fName, double* matrix, int rows, int cols){
+// Save matrix to file
+int saveMatrix(double* matrix, int rows, int cols) {
+	err = fopen_s(&pFile, fName, "w");
+	// Si se pudo abrir el archivo
+	if (err == 0) {
+		for (int i = 0; i < rows; i++)
+			for (int j = 0; j < cols; j++)
+				// Escribe los datos de la matriz en el archivo en el mismo 
+				// formato de los archivos de entrada 
+				fprintf_s(pFile, "% 20.15lf\n", *(matrix + i * cols + j));
+	}
+	else {
+		printf("No se pudo abrir el archivo %s, saliendo...\n", fName);
+		return 2;
+	}
+	fclose(pFile);
+	return 0;
+}
+
+// Fill matrix from file
+int fillMatrixUI(char* fName, double* m, int rows, int cols){
 	err = fopen_s(&pFile, fName, "r");
+	// Si no hay error abriendo el archivo
 	if (err == 0){
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
+				// Si no se ha llegado al fina del archivo
 				if (!feof(pFile)) {
-					fscanf_s(pFile, "%lf", (matrix + i * cols + j));
+					fscanf_s(pFile, "%lf ", (m + i * cols + j));
 				}
 				else {
 					printf("Elementos insuficientes en el archivo, saliendo...\n");
-					return 2;
+					return 3;
 				}
 		// Impresion de la matriz
-		printMatrix(matrix, rows, cols);
+		printMatrix(m, rows, cols);
 	}	
 	else {
 		printf("No se pudo abrir el archivo %s, saliendo...\n", fName);
-		return 1;
+		return 2;
 	}
 	fclose(pFile);
+	return 0;
 }
- 
+
 /********************/
 /*** Main program ***/
 /********************/
 int main(void){
+	if (getcwd(cwd, sizeof(cwd)) == NULL) {
+		perror("getcwd() error");
+		return 1;
+	}
+
 	int validMatrix = 0;
 	do
 	{
 		/*-----------------------------Llenado de matriz A-----------------------------*/
 		printf("Introduzca las dimensiones de la matriz A (filas columnas): ");
 		scanf_s("%d %d", &rA, &cA);
-		strcpy_s(fName, 100, "D:\\Users\\Alessandro Balcazar\\Documents\\Proyecto_Multi\\MatrixMulMP\\Debug\\matrixA2500.txt");
-		matrixA = (double*)malloc(sizeof(double) * rA * cA);
+		strcpy_s(fName, 100, cwd);
+		strcat_s(fName, 100, FILE_A);
+		matrixA = (double *) malloc(sizeof(double) * rA * cA);
 		fillMatrixUI(fName, matrixA, rA, cA);
 
 		/*-----------------------------Llenado de matriz B-----------------------------*/
 		printf("Introduzca las dimensiones de la matriz B (filas columnas): ");
 		scanf_s("%d %d", &rB, &cB);
-		strcpy_s(fName, 100, "D:\\Users\\Alessandro Balcazar\\Documents\\Proyecto_Multi\\MatrixMulMP\\Debug\\matrixB2500.txt");
-		err = fopen_s(&pFile, fName, "r");
-		matrixB = (double*)malloc(sizeof(double) * rB * cB);
+		strcpy_s(fName, 100, cwd);
+		strcat_s(fName, 100, FILE_B);
+		matrixB = (double *) malloc(sizeof(double) * rB * cB);
 		fillMatrixUI(fName, matrixB, rB, cB);
 
-		/*-----------Validacion para poder multuplicar las matrices-----------*/
+		/*---------------Validacion para poder multuplicar las matrices---------------*/
 		if (cA != rB) {
 			printf("\nLas matrices no se pueden multiplicar. Verifique que las filas y columnas.\n");
+			return 4; 
 		}
 		else {
 			validMatrix = 1;

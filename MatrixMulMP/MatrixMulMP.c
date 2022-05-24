@@ -147,7 +147,7 @@ int main(void){
 		mulMatrix(matrixA, matrixB, matrixC, rA, cB, cA);
 		end = clock();
 		seqTimeArr[i] = end - start; 
-		printf("%ld ",seqTimeArr[i]);
+		printf("%I64d ",seqTimeArr[i]);
 	}
 
 

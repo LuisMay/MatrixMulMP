@@ -140,5 +140,16 @@ int main(void){
 	strcat_s(fName, 100, FILE_C);
 	saveMatrix(matrixC, rA, cB);
 
+	// Calculo del tiempo en secuencial 
+	printf("Tiempo de ejecucion en secuencial (5): ");
+	for (int i = 0; i < 5; i++) {
+		start = clock();
+		mulMatrix(matrixA, matrixB, matrixC, rA, cB, cA);
+		end = clock();
+		seqTimeArr[i] = end - start; 
+		printf("%ld ",seqTimeArr[i]);
+	}
+
+
 	return 0; 
 }

@@ -78,6 +78,20 @@ int fillMatrixUI(char* fName, double* m, int rows, int cols){
 	return 0;
 }
 
+// Multiplica la matriz A por la matriz B y guarda el resultado en la matriz C
+void mulMatrix(double* mA, double* mB, double* mC, int rows, int cols, int el) {
+	double acum; 
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++) {
+			acum = 0;
+			for (int k = 0; k < el; k++) {
+				// Suma la multiplicacion de las filas de a por las columnas de b
+				acum += *(mA + i * el + k) * *(mB + k * cols + j);
+			}
+			*(mC + i * cols + j) = acum;
+		}
+}
+ 
 /********************/
 /*** Main program ***/
 /********************/
@@ -115,6 +129,16 @@ int main(void){
 			validMatrix = 1;
 		}
 	} while (validMatrix == 0);
+
+	// Calculo de la matriz C 
+	matrixC = (double*)malloc(sizeof(double) * rA * cB);
+	mulMatrix(matrixA, matrixB, matrixC, rA, cB, cA);
+	printf("\nMatriz C:\n");
+	printMatrix(matrixC, rA, cB);
+	printf("Guardando matrizC en archivo... \n");
+	strcpy_s(fName, 100, cwd);
+	strcat_s(fName, 100, FILE_C);
+	saveMatrix(matrixC, rA, cB);
 
 	return 0; 
 }

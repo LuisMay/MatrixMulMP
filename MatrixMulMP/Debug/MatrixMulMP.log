@@ -1,5 +1,6 @@
 ﻿  MatrixMulMP.c
-b:\matrixmulmp\matrixmulmp\matrixmulmp.c(27): warning C4013: 'malloc' undefined; assuming extern returning int
-b:\matrixmulmp\matrixmulmp\matrixmulmp.c(32): warning C4477: 'fscanf_s' : format string '%d' requires an argument of type 'int *', but variadic argument 1 has type 'double'
-b:\matrixmulmp\matrixmulmp\matrixmulmp.c(55): warning C4477: 'fscanf_s' : format string '%d' requires an argument of type 'int *', but variadic argument 1 has type 'double'
-  MatrixMulMP.vcxproj -> B:\MatrixMulMP\Debug\MatrixMulMP.exe
+D:\Users\Alessandro Balcazar\Documents\Proyecto_Multi\MatrixMulMP\MatrixMulMP\MatrixMulMP.c(157,13): warning C4101: 'k': variable local sin referencia
+D:\Users\Alessandro Balcazar\Documents\Proyecto_Multi\MatrixMulMP\MatrixMulMP\MatrixMulMP.c(157,10): warning C4101: 'j': variable local sin referencia
+D:\Users\Alessandro Balcazar\Documents\Proyecto_Multi\MatrixMulMP\MatrixMulMP\MatrixMulMP.c(195,12): warning C4013: 'getcwd' sin definir; se supone que extern devuelve como resultado int
+D:\Users\Alessandro Balcazar\Documents\Proyecto_Multi\MatrixMulMP\MatrixMulMP\MatrixMulMP.c(195,38): warning C4047: '==': 'int' es distinto en los niveles de direccionamiento indirecto de 'void *'
+  MatrixMulMP.vcxproj -> D:\Users\Alessandro Balcazar\Documents\Proyecto_Multi\MatrixMulMP\Debug\MatrixMulMP.exe
